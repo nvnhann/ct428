@@ -54,7 +54,7 @@ if( isset($_POST['tendn']) &&
     <title>Đăng ký tài khoản</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .content{
+        .content1{
             width: 60%;
             margin: 3em auto;
         }
@@ -76,7 +76,8 @@ if( isset($_POST['tendn']) &&
     </style>
 </head>
 <body>
-    <div class="content">
+    <?php require"./menu.php" ?>
+    <div class="content1">
         <div class="doc-note doc-note--warning" style="width: 30%">
             MSSV: B1809272 <br/>
             Họ Tên: Nguyễn Văn Nhẫn
@@ -154,7 +155,6 @@ if( isset($_POST['tendn']) &&
                 </table>
             </form>
         </div>
-        <button class="btn btn-warning " onclick="window.location.href='./index.php'" style="cursor: pointer;">Trang chủ</button>
     </div>
     <script>
         const checkUser = (usn) =>{
@@ -162,16 +162,16 @@ if( isset($_POST['tendn']) &&
             const err = document.getElementById("error");
             xmlhttp.onreadystatechange = function (){
                 if(this.readyState === 4 && this.status === 200){
-                    // document.getElementById('error').style.display = 'block !important';
-                    // document.getElementById("error").innerHTML = this.responseText;
                    if(this.responseText !== ''){
-                       err.classList.remove("hidden")
+                       err.classList.remove("hidden");
                    }
+
                 }
             }
             xmlhttp.open("GET","process.php?checkusr="+usn,true);
             xmlhttp.send();
             err.classList.add("hidden");
+
         }
 
         const validateForm = () => {
@@ -195,10 +195,22 @@ if( isset($_POST['tendn']) &&
                return false;
             }
 
-            // const tendnRGEX = new RegExp("^([A-Za-z])([A-Za-z][0-9]{6,15})");
-            // if(!tendnRGEX.test(tendn)){
-            //     alert('Tên đăng nhập không hợp lệ')
-            // }
+             const tendnRGEX = new RegExp("^([a-zA-Z])[a-zA-Z\d].{6,15}");
+            if(!tendnRGEX.test(tendn)){
+                alert('Tên đăng nhập không hợp lệ \nbắt đầu phải là chữ cái, theo sau có thể là chữ cái hoặc là số; dài từ 6 đến 15 ký tự!');
+                return false;
+            }
+
+            const mkRGEX = new RegExp("(?=.*?[A-Za-z])(?=.*?[0-9]).{6,15}$");
+            if(!mkRGEX.test(mk)){
+                alert('Mật khẩu không hợp lệ \nphải có cả chữ cái và số; không được có ký tự khác ngoài chữ cái và số; dài từ 6 đến 15 ký tự');
+                return false;
+            }
+
+            if(!document.querySelector("#error").classList.contains('hidden')){
+                alert('Tên đăng nhập đã tồn tại');
+                return false;
+            }
            return true;
         }
     </script>

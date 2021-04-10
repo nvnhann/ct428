@@ -20,6 +20,7 @@ include('db.php');
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <?php require"./menu.php";?>
     <div style="width: 50em; margin: 1em auto;">
         <div class="doc-note doc-note--warning">
                 <p>MSSV: B1809272 <br/> Họ Tên: Nguyễn Văn Nhẫn</p>
@@ -42,7 +43,6 @@ include('db.php');
         onclick="window.location.href='./03-listproducts.php'">Danh sách sản phẩm</button>
         <button class="btn btn-primary" style="cursor: pointer"  
         onclick="window.location.href='./03-logout.php'">Đăng xuất</button>
-        <button class="btn btn-warning " onclick="window.location.href='./index.php'" style="cursor: pointer;">Trang chủ</button>
     </div>
 </body>
 </html>

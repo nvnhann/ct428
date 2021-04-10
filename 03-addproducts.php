@@ -48,42 +48,43 @@ if (isset($_POST['tensp'])) {
     <title>Thêm sản phẩm</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div style="width: 50em; margin: 1em auto;">
-    <div class="doc-note doc-note--warning">
-        <p>MSSV: B1809272 <br/> Họ Tên: Nguyễn Văn Nhẫn</p>
-    </div>
-    <form style="width: 60%; margin: 1em auto; background-color: #E0E0E0"
-          method="POST"
-          action="./03-addproducts.php"
-          enctype="multipart/form-data">
-        <table>
-            <tr>
-                <td style=""><label for="tensp">Tên sản phẩm</label></td>
-                <td><input name="tensp" id="tensp" type="text"></td>
-            </tr>
-            <tr>
-                <td><label for="ctsp">Chi tiết sản phẩm</label></td>
-                <td><textarea name="ctsp" id="ctsp" cols="30" rows="10"></textarea></td>
-            </tr>
-            <tr>
-                <td><label for="giasp">Giá sản phẩm</label></td>
-                <td><input name="giasp" id="giasp" type="text"></td>
-            </tr>
-            <tr>
-                <td><label for="hinhsp">Hình ảnh sản phẩm</label></td>
-                <td><input name="hinhsp" id="hinhsp" type="file"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td style="padding-bottom: 1em">
-                    <button class="btn btn-primary" type="submit">Lưu sản phẩm</button>
-                    <button class="btn btn-primary" type="reset">Làm lại</button>
-                </td>
-            </tr>
-        </table>
-    </form>
-    <button class="btn btn-warning " onclick="window.location.href='./index.php'" style="cursor: pointer;">Trang chủ</button>
-</div>
-</body>
+    <body>
+        <?php require"./menu.php" ?>
+        <div style="width: 50em; margin: 1em auto;">
+            <div class="doc-note doc-note--warning">
+                <p>MSSV: B1809272 <br/> 
+                Họ Tên: Nguyễn Văn Nhẫn</p>
+            </div>
+            <form style="width: 60%; margin: 1em auto; background-color: #E0E0E0"
+                method="POST"
+                action="./03-addproducts.php"
+                enctype="multipart/form-data">
+                <table>
+                    <tr>
+                        <td style=""><label for="tensp">Tên sản phẩm</label></td>
+                        <td><input name="tensp" id="tensp" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="ctsp">Chi tiết sản phẩm</label></td>
+                        <td><textarea name="ctsp" id="ctsp" cols="30" rows="10"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label for="giasp">Giá sản phẩm</label></td>
+                        <td><input name="giasp" id="giasp" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="hinhsp">Hình ảnh sản phẩm</label></td>
+                        <td><input name="hinhsp" id="hinhsp" type="file"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="padding-bottom: 1em">
+                            <button class="btn btn-primary" type="submit">Lưu sản phẩm</button>
+                            <button class="btn btn-primary" type="reset">Làm lại</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
 </html>

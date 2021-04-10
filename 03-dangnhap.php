@@ -63,6 +63,7 @@
       color: white;
       margin-left: 25px;
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+      text-align: center;
     }
 
     button:hover {
@@ -71,7 +72,7 @@
 
     .form {
       width: 50%;
-      margin: 10em auto;
+      margin: 5em auto;
       padding: 2em;
       background-image: linear-gradient(120deg, #a1c4fd 0, #c2e9fb 100%);
       border-radius: 15px;
@@ -80,6 +81,7 @@
 </head>
 
 <body>
+  <?php require "./menu.php" ?>
   <div class="form">
     <form action="03-dangnhap.php" method="post">
       <h1>Đăng nhập</h1>

@@ -10,9 +10,9 @@
             background-color: #e8ecee;
         }
 
-        .content {
+        .content1 {
             width: 60%;
-            margin: 5em auto;
+            margin: 0 auto;
         }
 
         .table {
@@ -53,7 +53,8 @@
 </head>
 
 <body>
-        <div class="content">
+    <?php require"./menu.php"?>
+        <div class="content1">
             <div class="doc-note doc-note--warning" style="width: 30%">
                 <b>MSSV:</b> B1809272 <br/> <b> Họ Tên:</b> Nguyễn Văn Nhẫn
             </div>
@@ -140,8 +141,6 @@
             <div class="doc-note doc-note--warning">
                 <b>CT271</b> - Niên luận cơ sở - CNTT (Cô Lâm Nhựt Khang)
             </div>
-            <button class="btn btn-warning " onclick="window.location.href='./index.php'" style="cursor: pointer;">Trang chủ
-            </button>
         </div>
     </body>
 </html>

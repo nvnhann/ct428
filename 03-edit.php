@@ -1,5 +1,14 @@
 <?php
     include('db.php');
+    function getName($n) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+        $randomString = '';
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+        return $randomString;
+    }
     session_start();
     if(!$_SESSION['name']){
         header("Location: ./03-dangnhap.php");
@@ -12,8 +21,12 @@
          $sql1 = "SELECT * from sanpham where idsp = ".$_GET['id']." AND idtv = '".$list[0]['id']."';";
         $list1= executeResult($sql1);
     }
-     if(isset($_POST['tensp']) || isset($_POST['ctsp']) || isset($_POST['giasp']) || isset($_POST['hinhsp'])){
-         $sql2= "UPDATE `sanpham` SET `tensp` = '".$_POST['tensp']."', `chitietsp` = '".$_POST['ctsp']."', `giasp` = '".$_POST['giasp']."' WHERE (`idsp` = '".$_POST['idsp']."');";
+     if(isset($_POST['tensp']) || isset($_POST['ctsp']) || isset($_POST['giasp'])){
+        $filename = $_FILES['hinhsp']['tmp_name'];
+        $destination = "./img/products/" . getName(6) . $_FILES['hinhsp']['name'];
+        move_uploaded_file($filename, $destination);
+
+         $sql2= "UPDATE `sanpham` SET `tensp` = '".$_POST['tensp']."', `chitietsp` = '".$_POST['ctsp']."', `giasp` = '".$_POST['giasp']."', hinhanhsp = '$destination' WHERE (`idsp` = '".$_POST['idsp']."');";
          execute($sql2);
          echo $sql2;
         header("Location: ./03-listproducts.php");
