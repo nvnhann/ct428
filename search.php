@@ -1,16 +1,17 @@
 <?php
-include('db.php');
+require 'db.php';
 session_start();
-if (!$_SESSION['name']) {
-    header("Location: ./03-dangnhap.php");
+if (!$_SESSION['tendn']) {
+    header("Location: .dangnhap.php");
     exit;
 }
-if(isset($_GET['s'])){
-    $sql = "SELECT * from thanhvien where tendn= '" . $_SESSION['name'] . "';";
-    $list = executeResult($sql);
-    $sql1 = "SELECT * from sanpham where idtv = " . $list[0]['id'] . " and tensp like  '%" . $_GET['s']. "%';";
-    $listsp = executeResult($sql1);
-
+if (isset($_GET['s'])) {
+    $sql = "SELECT * from thanhvien where tendn= '" . $_SESSION['tendn'] . "';";
+    $rs = $conn->query($sql) or die($conn->error);
+    $row = $rs->fetch_assoc();
+    $id = $row['id'];
+    $sql1 = "SELECT * from sanpham where idtv = " . $id . " and tensp like  '%" . $_GET['s'] . "%';";
+    $rs1 = $conn->query($sql1);
 }
 
 echo "
@@ -27,21 +28,21 @@ echo "
 ";
 
 
-        if (!count($listsp)) {
-            echo " <tr><td colspan='4'>Danh sách sản phẩm trống</td></tr>";
-        } else {
-            $count = 1;
-            foreach ($listsp as $value) {
-                echo "
+if ($rs1->num_rows) {
+    $count = 1;
+    while ($row1 = $rs1->fetch_assoc()) {
+        echo "
                     <tr>
                     <td>" . $count++ . "</td>
-                    <td style='text-align: left'>" . $value['tensp'] . "</td>
-                    <td>" . $value['giasp'] . "</td>
-                    <td><a style='cursor: pointer; text-decoration: underline; color: #6f86d6' onclick='detail(" . $value['idsp'] . ")'>Xem chi tiết</a></td>
-                    <td><a href='./03-edit.php?id=" . $value['idsp'] . "'><img  width='16px' src='./img/edit.png'/></a></td>
-                    <td><a href='./03-delete.php?id=" . $value['idsp'] . "'><img width='16px' src='./img/delete.png'/></a></td>
+                    <td style='text-align: left'>" . $row1['tensp'] . "</td>
+                    <td>" . $row1['giasp'] . "</td>
+                    <td><a style='cursor: pointer; text-decoration: underline; color: #6f86d6' onclick='detail(" . $row1['idsp'] . ")'>Xem chi tiết</a></td>
+                    <td><a href='suasp.php?id=" . $row1['idsp'] . "'><img  width='16px' src='./img/edit.png'/></a></td>
+                    <td><a href='xoasp.php?id=" . $row1['idsp'] . "'><img width='16px' src='./img/delete.png'/></a></td>
                     </tr>
                     ";
-            }
-        }
-        echo "</tbody></table>";
+    }
+} else {
+    echo " <tr><td colspan='4'>Danh sách sản phẩm trống</td></tr>";
+}
+echo "</tbody></table>";

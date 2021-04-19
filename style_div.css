@@ -14,7 +14,7 @@ a{
 }
 #wrap #title{
     height: 15em;
-    background-image: url("./header.jpg");
+    background-image: url("./img/header.jpg");
     background-repeat: no-repeat;
     background-size:100vw 40vh;
     flex: 100%;
