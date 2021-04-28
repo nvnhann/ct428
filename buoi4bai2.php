@@ -14,6 +14,11 @@
         IMAGE_PATHS[2] = "img/acer.jpg";
         IMAGE_PATHS[3] = "img/asus.jpg";
 
+        function chooseSlide(pos) {
+            document.getElementById("laptopImg").src = IMAGE_PATHS[pos];
+
+        }
+
         function changeSlide(pos) {
             const len = IMAGE_PATHS.length;
             if (typeof(this.i) == 'undefined') {
@@ -30,11 +35,15 @@
 
             }
             document.getElementById("laptopImg").src = IMAGE_PATHS[this.i];
+            document.getElementById("laptopSel").value = this.i;
+
+
 
         }
 
         function chooseSlide(pos) {
             document.getElementById("laptopImg").src = IMAGE_PATHS[pos];
+
         }
     </script>
 </head>
@@ -63,7 +72,7 @@
                             <input class="btn btn-primary" type="button" name="next" value="Next" onclick="changeSlide(1)">
                         </div>
                         <br />
-                        <select name="laptopSel" onchange="chooseSlide(this.value)">
+                        <select name="laptopSel" id='laptopSel' onchange="chooseSlide(this.value)">
                             <option value="0">HP</option>
                             <option value="1">Dell</option>
                             <option value="2">Acer</option>
