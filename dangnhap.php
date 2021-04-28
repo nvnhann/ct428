@@ -41,14 +41,17 @@ $conn->close();
             <div class="text-center" style="color: rgb(155, 100, 100);">
                 <?php echo $err; ?>
             </div>
-            <form action="dangnhap.php" name="dangnhap" method="post" enctype="multipart/form-data">
+            <form action="dangnhap.php" name="dangnhap" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <div class="input-block">
                     <label for="tendn">Tên đăng nhập</label>
-                    <input id="tendn" name="tendn" type="text" required>
+                    <input id="tendn" name="tendn" type="text">
+                    <span id='err1' style="color: red"></span>
                 </div>
                 <div class="input-block">
                     <label for="mk">Mật khẩu</label>
-                    <input id="mk" name="mk" type="password" required>
+                    <input id="mk" name="mk" type="password">
+                    <span id='err2' style="color: red"></span>
+
                 </div>
                 <div style="padding: 1em 0">
                     <button class="btn btn-primary" type="submit">Đăng nhập</button>
@@ -58,5 +61,28 @@ $conn->close();
         </div>
     </div>
 </div>
+
+<script>
+    const validateForm = () => {
+        const tendn = document.forms['dangnhap']['tendn'].value;
+        const mk = document.forms['dangnhap']['mk'].value;
+        let flag = true;
+        if (tendn === '') {
+            document.getElementById('err1').innerText = 'Tên đăng nhập không được để trống';
+            flag = false;
+        } else {
+            document.getElementById('err1').innerText = '';
+        }
+        if (mk === '') {
+            document.getElementById('err2').innerText = 'Mật khẩu không được để trống';
+            flag = false;
+        } else {
+            document.getElementById('err2').innerText = '';
+        }
+
+
+        return flag;
+    }
+</script>
 
 </html>

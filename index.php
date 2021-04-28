@@ -11,7 +11,7 @@
 <body>
     <?php require "menu.php" ?>
     <div id="card">
-        <img src="./img/avt.jpg" />
+        <img src="./img/reatcjs.png" />
         <h2>Nguyễn Văn Nhẫn</h2>
         <p><b>MSSV:</b> B1809272</p>
         <p><b>Nhóm:</b> 02</p>

@@ -63,35 +63,40 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
                 <form action="dangky.php" name="dangky" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                     <div class="input-block">
                         <label for="tendn">Tên đăng nhập</label>
-                        <input id="tendn" name="tendn" type="text" required onblur="checkUser(this.value)">
-                        <div id="error" class="hidden">Tên đăng nhập dã tồn tại</div>
+                        <input id="tendn" name="tendn" type="text" onblur="checkUser(this.value)">
+                        <div id="err1" style="color: red"></div>
                     </div>
                     <div class="input-block">
                         <label for="mk">Mật khẩu</label>
-                        <input id="mk" name="mk" type="password" required>
+                        <input id="mk" name="mk" type="password">
+                        <div id="err2" style="color: red"></div>
                     </div>
                     <div class="input-block">
                         <label for="rmk">Nhập lại mật khẩu</label>
-                        <input id="rmk" name="rmk" type="password" required>
+                        <input id="rmk" name="rmk" type="password">
+                        <div id="err3" style="color: red"></div>
                     </div>
                     <div class="input-block">
                         <label for="file">Hình đại diện</label>
                         <input type="file" name="avt" id="file" aria-label="File browser example">
+                        <div id="err4" style="color: red"></div>
                     </div>
                     <div class="input-radio">
                         <label>Giới tính</label>
                         <input type="radio" name="gioitinh" id="nam" value="Nam"> Nam &nbsp;
                         <input type="radio" name="gioitinh" id="nu" value="Nữ"> Nữ&nbsp;
                         <input type="radio" name="gioitinh" id="khac" value="Khác">Khác
+                        <div id="err5" style="color: red"></div>
                     </div>
                     <div class="input-select">
                         <label for="nn">Nghề nghiệp</label>
                         <select name="nghenghiep" id="nn">
-                            <option value="Học sinh" selected>Học sinh</option>
+                            <option value="Học sinh">Học sinh</option>
                             <option value="Sinh Viên">Sinh Viên</option>
                             <option value="Giáo viên">Giáo viên</option>
                             <option value="Khác">Khác</option>
                         </select>
+                        <div id="err6" style="color: red"></div>
                     </div>
                     <div class="input-radio">
                         <label>Sở thích</label>
@@ -103,6 +108,7 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
                         <label for="amnhac">Âm nhạc</label>
                         <input type="checkbox" class="sothich" name="st[]" id="thoitrang" value="Thời trang">
                         <label for="thoitrang">Thời trang</label>
+                        <div id="err7" style="color: red"></div>
                     </div>
                     <div style="padding: 1em 0">
                         <button class="btn btn-primary" type="submit">Đăng ký</button>
@@ -115,57 +121,88 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
     <script>
         const checkUser = (usn) => {
             const xmlhttp = new XMLHttpRequest();
-            const err = document.getElementById("error");
+            flag = false;
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
                     if (this.responseText !== '') {
-                        err.classList.remove("hidden");
+                        document.getElementById('err1').innerText = 'Tên đăng nhập đã tồn tại';
+                        flag = true;
                     }
-
                 }
             }
+            
             xmlhttp.open("GET", "process.php?checkusr=" + usn, true);
             xmlhttp.send();
-            err.classList.add("hidden");
+            return flag;
         }
 
         const validateForm = () => {
-            let tendn = document.forms['dangky']['tendn'].value;
-            let mk = document.forms['dangky']['mk'].value;
-            let rmk = document.forms['dangky']['rmk'].value;
-            let avt = document.forms['dangky']['avt'].value;
-            let gioitinh = document.forms['dangky']['gioitinh'].value;
-            let nghenghiep = document.forms['dangky']['nghenghiep'].value;
-            let st = document.querySelector('input[type="checkbox"]:checked');
-
-
-            if (tendn === '' || mk === '' || avt === '' || gioitinh === '' || nghenghiep === '' || st === null) {
-                alert('Các trường không được bỏ trống');
-                return false;
+            const tendn = document.forms['dangky']['tendn'].value;
+            const mk = document.forms['dangky']['mk'].value;
+            const rmk = document.forms['dangky']['rmk'].value;
+            const avt = document.forms['dangky']['avt'].value;
+            const gioitinh = document.forms['dangky']['gioitinh'].value;
+            const nghenghiep = document.forms['dangky']['nghenghiep'].value;
+            const st = document.querySelector('input[type="checkbox"]:checked');
+            const tendnRGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9]{5,14}$");
+            const mkRGEX = new RegExp("(?=.*?[A-Za-z])(?=.*?[0-9]).{6,15}$");
+            let flag = true;
+            if (tendn === '') {
+                document.getElementById('err1').innerText = 'Tên đăng nhập không được bỏ trống'
+                flag = false;
+            } else if (!tendnRGEX.test(tendn)) {
+                document.getElementById('err1').innerText = 'Tên đăng nhập không hợp lệ';
+                flag = false;
+            } else {
+                document.getElementById('err1').innerText = '';
             }
 
-            if (rmk !== mk) {
-                alert('Mật khẩu không khớp');
-                return false;
+            if (mk === '') {
+                document.getElementById('err2').innerText = 'Mật khẩu không được bỏ trống';
+                flag = false;
+            } else if (!mkRGEX.test(mk)) {
+                document.getElementById('err2').innerText = 'Mật khẩu không hợp lệ';
+                flag = false;
+            } else {
+                document.getElementById('err2').innerText = '';
             }
 
-            //  const tendnRGEX = new RegExp("^([a-zA-Z])[a-zA-Z\d].{6,15}");
-            // if(!tendnRGEX.test(tendn)){
-            //     alert('Tên đăng nhập không hợp lệ \nbắt đầu phải là chữ cái, theo sau có thể là chữ cái hoặc là số; dài từ 6 đến 15 ký tự!');
-            //     return false;
-            // }
-
-            // const mkRGEX = new RegExp("(?=.*?[A-Za-z])(?=.*?[0-9]).{6,15}$");
-            // if(!mkRGEX.test(mk)){
-            //     alert('Mật khẩu không hợp lệ \nphải có cả chữ cái và số; không được có ký tự khác ngoài chữ cái và số; dài từ 6 đến 15 ký tự');
-            //     return false;
-            // }
-
-            if (!document.querySelector("#error").classList.contains('hidden')) {
-                alert('Tên đăng nhập đã tồn tại');
-                return false;
+            if (rmk === '') {
+                document.getElementById('err3').innerText = 'Không được để trống';
+                flag = false;
+            } else if (mk !== rmk) {
+                document.getElementById('err3').innerText = 'Mật khẩu không khớp';
+                flag = false;
+            } else {
+                document.getElementById('err3').innerText = '';
             }
-            return true;
+
+            if (avt === '') {
+                document.getElementById('err4').innerText = 'Không được để trống';
+                flag = false;
+            } else {
+                document.getElementById('err4').innerText = '';
+
+            }
+
+            if (gioitinh === '') {
+                document.getElementById('err5').innerText = 'Không được để trống';
+                flag = false;
+            } else {
+                document.getElementById('err5').innerText = '';
+
+            }
+
+            if (st === null) {
+                document.getElementById('err7').innerText = 'Không được để trống';
+                flag = false;
+            } else {
+                document.getElementById('err7').innerText = '';
+
+            }
+
+            console.log(checkUser(tendn))
+            return flag;
         }
     </script>
 </body>

@@ -251,7 +251,8 @@ body
     box-shadow: -20px 0 35px -25px black, 20px 0 35px -25px black;
   }
   #card img {
-    width: 150px;
+    width: 200px;
+    height: 150px;
     float: left;
     border-radius: 5px;
     margin-right: 20px;
