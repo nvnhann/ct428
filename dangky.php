@@ -64,6 +64,7 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
                     <div class="input-block">
                         <label for="tendn">Tên đăng nhập</label>
                         <input id="tendn" name="tendn" type="text" onblur="checkUser(this.value)">
+                        <div id="err0" style="color: red"></div>
                         <div id="err1" style="color: red"></div>
                     </div>
                     <div class="input-block">
@@ -121,16 +122,14 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
     <script>
         const checkUser = (usn) => {
             const xmlhttp = new XMLHttpRequest();
-            flag = false;
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
                     if (this.responseText !== '') {
-                        document.getElementById('err1').innerText = 'Tên đăng nhập đã tồn tại';
-                        flag = true;
+                        document.getElementById('err0').innerText = 'Tên đăng nhập đã tồn tại';
                     }
                 }
             }
-            
+            document.getElementById('err1').innerText = '';
             xmlhttp.open("GET", "process.php?checkusr=" + usn, true);
             xmlhttp.send();
             return flag;
@@ -200,8 +199,6 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
                 document.getElementById('err7').innerText = '';
 
             }
-
-            console.log(checkUser(tendn))
             return flag;
         }
     </script>
