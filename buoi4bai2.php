@@ -36,6 +36,8 @@
             }
             document.getElementById("laptopImg").src = IMAGE_PATHS[this.i];
             document.getElementById("laptopSel").value = this.i;
+            document.getElementById("laptopImg").src = IMAGE_PATHS[this.i];
+
 
 
 
