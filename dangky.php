@@ -21,7 +21,7 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
 
     $filename = $_FILES['avt']['tmp_name'];
     $destination = "./img/" . getName(6) . $_FILES['avt']['name'];
-    move_uploaded_file($filename, $destination);
+    copy($filename, $destination);
 
     $st1 = '';
     for ($i = 0; $i < count($st) - 1; $i++) {
@@ -120,19 +120,19 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
         </div>
     </div>
     <script>
+        let flag = true;
         const checkUser = (usn) => {
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
                     if (this.responseText !== '') {
-                        document.getElementById('err0').innerText = 'Tên đăng nhập đã tồn tại';
-                    }
+                        flag = false;
+                    } else flag = true;
                 }
+                 document.getElementById('err0').innerText = this.responseText;
             }
-            document.getElementById('err1').innerText = '';
             xmlhttp.open("GET", "process.php?checkusr=" + usn, true);
             xmlhttp.send();
-            return flag;
         }
 
         const validateForm = () => {
@@ -145,7 +145,6 @@ if (isset($_POST['tendn']) && isset($_POST['mk'])) {
             const st = document.querySelector('input[type="checkbox"]:checked');
             const tendnRGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9]{5,14}$");
             const mkRGEX = new RegExp("(?=.*?[A-Za-z])(?=.*?[0-9]).{6,15}$");
-            let flag = true;
             if (tendn === '') {
                 document.getElementById('err1').innerText = 'Tên đăng nhập không được bỏ trống'
                 flag = false;
