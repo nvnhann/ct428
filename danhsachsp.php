@@ -65,7 +65,7 @@ if (!$_SESSION['tendn']) {
                 <b>MSSV:</b> B1809272 <br /> <b> Họ Tên:</b> Nguyễn Văn Nhẫn
             </div>
             <div class="input-block">
-                <input id="searchsp" name="searchsp" type="text" required placeholder="Tìm kiếm sản phẩm" onkeydown="searchsp(this.value)">
+                <input id="searchsp" name="searchsp" type="text" required placeholder="Tìm kiếm sản phẩm" onkeyup="searchsp(this.value)">
             </div>
             <table class="table1" style="width: 90%;" id="table">
                 <thead>
